@@ -1,15 +1,22 @@
 import 'dart:async';
 import 'dart:io';
+import 'http_method.dart';
 import 'request_api_arguments.dart';
 
 
 class BaseAPIClient {
   BaseAPIClient({SecurityContext? context}) {
-    _httpClient = HttpClient(context: context);
+    final _httpClient = HttpClient(context: context);
+
+    _methodMap = {
+      HttpMethod.get : _httpClient.getUrl,
+      HttpMethod.post : _httpClient.postUrl,
+      HttpMethod.put : _httpClient.putUrl,
+      HttpMethod.patch : _httpClient.patchUrl,
+      HttpMethod.delete : _httpClient.deleteUrl,
+    };
   }
   
-  late final HttpClient _httpClient;
-
   Uri makeUri(
     String host, 
     String path, 
@@ -17,61 +24,26 @@ class BaseAPIClient {
 
     final Uri uri = Uri.parse('$host$path');
     if (parametrs == null) return uri;
-    return uri.replace(queryParameters: parametrs);
+    return uri.replace(
+      queryParameters: parametrs);
   }
 
-  Future<T> get<T>(RequestAPIArguments<T> args) async {
-    final request = await _httpClient.getUrl(args.url);
-    _addHeadersIfNeed(args, request);
-    return await _getResponseResult(
-      response: await request.close(),
-      args: args
-    );
-  }
-
-  Future<T> post<T>({
-      required RequestAPIArguments<T> args, 
-      required dynamic content,
-    }) => _changeRequest(
-        method: _httpClient.postUrl,
-        content: content,
-        args: args
-  );
-   
-  Future<T> put<T>({
-      required RequestAPIArguments<T> args, 
-      required dynamic content,
-    }) => _changeRequest(
-      method: _httpClient.putUrl,
-      content: content,
-      args: args
-  );
-  
-  Future<T> patch<T>({
-      required RequestAPIArguments<T> args, 
-      required dynamic content,
-    }) => _changeRequest(
-      method: _httpClient.patchUrl,
-      content: content,
-      args: args
-  );
-  
-  Future<T> delete<T>(RequestAPIArguments<T> args) async {
-    final request = await _httpClient.deleteUrl(args.url);
-    return await _getResponseResult(
-      response: await request.close(),
-      args: args
-    );
-  }
-
-  Future<T> _changeRequest<T>({
-      required RequestAPIArguments<T> args,
-      required Future<HttpClientRequest> Function(Uri url) method,
-      required dynamic content,
+  Future<T> sendRequest<T>({
+      required HttpMethod httpMethod,
+      required RequestAPIArguments<T> args,    
+      dynamic requestBody,
     }) async {
+      
+    final method = _methodMap[httpMethod]!;
+    // SocketException
     final request = await method(args.url);
+
     _addHeadersIfNeed(args, request);
-    request.write(args.typeHandler.requestBodyEncoder(content));
+
+    if (requestBody != null) {
+      request.write(args.requestEncoder.requestBodyEncoder(requestBody));
+    }
+
     return await _getResponseResult(
       response: await request.close(),
       args: args
@@ -86,10 +58,10 @@ class BaseAPIClient {
     final contentDecoded = await args.responseHandler
     .streamDecoder(response);
     
-    final result = args.responseHandler.contentParser(contentDecoded);
-
     final validator = args.responseHandler.validator;
-    if (validator != null) validator(response, result);
+    if (validator != null) validator(response, contentDecoded);
+
+    final result = args.responseHandler.contentParser(contentDecoded);
     
     return result;
   }
@@ -100,7 +72,7 @@ class BaseAPIClient {
 
     if (!args.needHeaders) return; 
 
-    request.headers.contentType = args.typeHandler.contentType;
+    request.headers.contentType = args.requestEncoder.contentType;
 
     if (args.headers == null) return;
 
@@ -108,4 +80,8 @@ class BaseAPIClient {
       request.headers.add(key, value);
     });
   }
+
+  // На данный момент не используется внутри класса, только в конструкторе
+  late final HttpClient _httpClient;
+  late final Map<HttpMethod, Future<HttpClientRequest> Function(Uri)> _methodMap;
 }

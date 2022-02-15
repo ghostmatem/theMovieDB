@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/user_interface/auth_screen/imput_fields_widget.dart';
-import 'package:the_movie_db/user_interface/secondary_widgets/my_placer.dart';
+import 'package:the_movie_db/Library/Widgets/providers.dart';
+import 'package:the_movie_db/data/models/auth_model.dart';
 import 'package:the_movie_db/user_interface/styles/auth_theme.dart';
+import 'package:the_movie_db/user_interface/widgets/my_placer.dart';
+
+import 'imput_fields_widget.dart';
 
 class AuthMainWidget extends StatelessWidget {
   const AuthMainWidget({ Key? key }) : super(key: key);
@@ -9,7 +12,7 @@ class AuthMainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AuthTheme.backColor,
+      backgroundColor: AuthTheme.backgroundColor,
       appBar: AppBar(
         title: const Text("Авторизация"),
         centerTitle: true,
@@ -38,7 +41,9 @@ class _AuthBody extends StatelessWidget {
             labelText,
             style: AuthTheme.labelTextStyle),
           MyPlacer(height: AuthTheme.insets.afterLabelText),
-          const ImputFieldsWidget()
+          NotifierProvider<AuthModel>(
+            model: AuthModel(),
+            child: const ImputFieldsWidget())
         ],),
     );
   }

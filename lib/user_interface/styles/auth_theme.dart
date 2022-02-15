@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 abstract class AuthTheme {
 
-  static const Color buttonColor = Color(0xFF01b4e4);
-  static const Color backAppBarColor = Color(0xFA0d253f);
-
-  static const Color backColor = Color.fromRGBO(255, 255, 255, 0.95); 
+  static const Color backgroundColor = Color.fromRGBO(255, 255, 255, 0.95); 
 
   static const borderRadius = 6.0;
 
@@ -16,7 +15,7 @@ abstract class AuthTheme {
   );
 
   static final ButtonStyle mainButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(buttonColor),
+    backgroundColor: MaterialStateProperty.all(AppTheme.secondaryColor),
     shape: MaterialStateProperty.all(
       const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(borderRadius))
@@ -40,7 +39,7 @@ abstract class AuthTheme {
       const TextStyle(
         fontSize: 14.5,
         fontWeight: FontWeight.w600,
-        color: buttonColor,
+        color: AppTheme.secondaryColor,
       ))
   );
 }

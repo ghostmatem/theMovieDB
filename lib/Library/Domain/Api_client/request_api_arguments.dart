@@ -2,20 +2,20 @@ import 'api_handler.dart';
 
 class RequestAPIArguments<T> {
   final Uri url;
-  late final RequestTypeHandler typeHandler;
+  late final RequestEncoder requestEncoder;
   bool needHeaders;
   final Map<String, dynamic>? headers; 
   ResponseHandler<T> responseHandler;
   
 
-  /// By default, typeHandler.jsonUTF8
+  /// By default, requestEncoder.jsonUTF8
   RequestAPIArguments({ 
     required this.url,
     required this.responseHandler,
-    RequestTypeHandler? requestTypeHandler,
+    RequestEncoder? requestEncoder,
     this.needHeaders = true,
     this.headers,
   }) {
-    typeHandler = requestTypeHandler ?? RequestTypeHandler.jsonUTF8;
+    this.requestEncoder = requestEncoder ?? RequestEncoder.jsonUTF8;
   }
 }

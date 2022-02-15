@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie_db/Library/Widgets/providers.dart';
+import 'package:the_movie_db/data/models/movie_model.dart';
+import 'package:the_movie_db/user_interface/widgets/movie_list_widget/movie_list_widget.dart';
 
-import 'package:the_movie_db/user_interface/movie_list_view_widget/movie_list_view.dart';
-import 'package:the_movie_db/user_interface/movie_view_screen_widget/movie_search_delegate.dart';
-import 'package:the_movie_db/user_interface/secondary_widgets/my_placer.dart';
-import 'package:the_movie_db/user_interface/secondary_widgets/my_text_field_widget.dart';
+
+import 'movie_search_delegate.dart';
+
+
 
 class MovieViewScreenWidget extends StatelessWidget {
   const MovieViewScreenWidget({
     Key? key,
-    required this.header,
   }) : super(key: key);
-
-  final String header;
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text(header),
+        title: const _HeaderWidget(),
         centerTitle: true,
         actions: [
           _searchButton(context)
         ],),
-      body: const MovieListView(),
+      body: const MovieListWidget(),
     );
   }
 
@@ -40,5 +41,17 @@ class MovieViewScreenWidget extends StatelessWidget {
         onPressed: () =>_search(context), 
         icon: const Icon(Icons.search)),
     );
+  }
+}
+
+class _HeaderWidget extends StatelessWidget {
+  const _HeaderWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<MovieModel>(context)!;
+    return Text(model.screenHeader);
   }
 }

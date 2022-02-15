@@ -3,8 +3,8 @@ import 'dart:io';
 
 import '../to_json_decoded_extention.dart';
 
-class RequestTypeHandler {
-  static final RequestTypeHandler jsonUTF8 = RequestTypeHandler(
+class RequestEncoder {
+  static final RequestEncoder jsonUTF8 = RequestEncoder(
     contentType: ContentType.json,
     requestBodyEncoder: (requestBody) =>
       jsonEncode(requestBody)
@@ -13,7 +13,7 @@ class RequestTypeHandler {
   final ContentType contentType;
   final dynamic Function (dynamic content) requestBodyEncoder;
 
-  RequestTypeHandler(
+  RequestEncoder(
     {
       required this.contentType, 
       required this.requestBodyEncoder, 
@@ -21,9 +21,9 @@ class RequestTypeHandler {
 }
 
 class ResponseHandler<T> {
-  final T Function(dynamic json) contentParser;
+  final T Function(dynamic content) contentParser;
   final Future<dynamic> Function (HttpClientResponse response) streamDecoder;
-  final void Function(HttpClientResponse response, dynamic json)? validator;
+  final void Function(HttpClientResponse response, dynamic decodedResponseBody)? validator;
 
   ResponseHandler({
     required this.contentParser,

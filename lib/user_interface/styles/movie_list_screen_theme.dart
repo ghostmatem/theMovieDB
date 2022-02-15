@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 abstract class MovieListScreenTheme {
+
+  static const double posterHeight = 141;
+  static const double posterWidth = 94;
+
+  static final logoPlaceholred = Image.asset(AppTheme.logo, scale: 3);
 
   static const headerTextStyle = TextStyle(
     fontSize: 16,

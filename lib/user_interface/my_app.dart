@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/user_interface/navigation/main_navigations.dart';
-import 'package:the_movie_db/user_interface/styles/auth_theme.dart';
+import 'package:the_movie_db/user_interface/styles/app_theme.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
-          backgroundColor: AuthTheme.backAppBarColor)
+          backgroundColor: AppTheme.primaryColor)
       ),
       routes: mainAppNavigations.routes,
       initialRoute: mainAppNavigations.initialRoute,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class NotifierProvider<Model extends Listenable> extends InheritedNotifier {
+class NotifierProvider<Model extends Listenable> extends InheritedNotifier<Model> {
   const NotifierProvider({
     Key? key,
     required Widget child,
@@ -9,14 +9,18 @@ class NotifierProvider<Model extends Listenable> extends InheritedNotifier {
 
   final Model model;
 
-  static NotifierProvider<Model>? watch<Model extends Listenable> (BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<NotifierProvider<Model>>();
+  static Model? watch<Model extends Listenable> (BuildContext context) {
+    return context
+    .dependOnInheritedWidgetOfExactType<NotifierProvider<Model>>()
+    ?.model;
   }
 
-  static NotifierProvider<Model>? read<Model extends Listenable> (BuildContext context) {  
-    return (context
-    .getElementForInheritedWidgetOfExactType<NotifierProvider<Model>>()
-    as NotifierProvider<Model>);
+  static Model? read<Model extends Listenable> (BuildContext context) {
+    var widget = context
+    .getElementForInheritedWidgetOfExactType
+    <NotifierProvider<Model>>()
+    ?.widget as NotifierProvider<Model>?;
+    return widget?.model;
   }
 }
 
