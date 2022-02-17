@@ -19,7 +19,7 @@ class MovieApiClient {
       args: RequestAPIArguments(
         url: _apiClient.makeUri(
           APILinks.mainHost, 
-          _categotyPathMap[category]!,
+          CategoryRoot.getDataByCategory(category).urlPath,
           _queryParametrs
           ), 
           responseHandler: _responseHandler,
@@ -32,12 +32,7 @@ class MovieApiClient {
     'region' : 'RU',
   };
 
-  static const _categotyPathMap = <MovieViewCategory, String>{
-    MovieViewCategory.nowPlaying  : '/movie/now_playing',
-    MovieViewCategory.popular     : '/movie/popular',
-    MovieViewCategory.topRated    : '/movie/top_rated',
-    MovieViewCategory.upcoming    : '/movie/upcoming',
-  };
+  
 
   final _responseHandler = ResponseHandler(
     contentParser: (jsonMap) => MovieListResponse.fromJson(jsonMap));

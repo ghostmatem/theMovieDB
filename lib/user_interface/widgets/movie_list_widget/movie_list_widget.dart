@@ -21,12 +21,13 @@ class MovieListWidget extends StatelessWidget {
     }
 
     final movies = model.movies!;
+    var paginationBeginningWithOffset = model.paginationBeginningWith;
 
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: movies.length,
       itemBuilder: (BuildContext context, int index) {
-        model.autoUploadingMoviesByIndex(index);
+        if (index >= paginationBeginningWithOffset) model.tryLoadNextPage();
         return MovieListTitleWidget(movie : movies[index]);
       },
       separatorBuilder: (BuildContext context, int index) {
