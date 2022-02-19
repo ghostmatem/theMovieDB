@@ -3,7 +3,7 @@ import 'package:the_movie_db/Library/Widgets/providers.dart';
 import 'package:the_movie_db/data/models/auth_model.dart';
 import 'package:the_movie_db/user_interface/navigation/app_routes.dart';
 import 'package:the_movie_db/user_interface/styles/auth_theme.dart';
-import 'package:the_movie_db/user_interface/widgets/my_placer.dart';
+import 'package:the_movie_db/Library/Widgets/my_placer.dart';
 import 'package:the_movie_db/user_interface/widgets/my_text_field_widget.dart';
 
 class ImputFieldsWidget extends StatelessWidget {

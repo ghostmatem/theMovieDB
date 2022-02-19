@@ -3,6 +3,7 @@ import 'package:the_movie_db/Library/Widgets/providers.dart';
 import 'package:the_movie_db/data/models/app_model.dart';
 import 'package:the_movie_db/data/models/movie_model.dart';
 import 'package:the_movie_db/user_interface/screens/auth_screen/auth_main_widget.dart';
+import 'package:the_movie_db/user_interface/screens/movie_detail_screen/movie_detail_widget.dart';
 import 'package:the_movie_db/user_interface/screens/movie_view_screen/movie_view_screen_widget.dart';
 
 import 'app_routes.dart';
@@ -19,6 +20,7 @@ class MainAppNavigations {
 
     AppRoutes.auth : (context) => const AuthMainWidget(),
     AppRoutes.mainScreen : _showMovieWidget,
+    AppRoutes.detailScreen : (context) => const MovieDetailWidget(),
   };
 
   static Widget _showMovieWidget(BuildContext context) {

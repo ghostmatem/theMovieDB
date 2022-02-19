@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/data/entity/card_movie.dart';
 import 'package:the_movie_db/data/entity/movie_list_response.dart';
+import 'package:the_movie_db/data/entity/movie_view_category/category_rote.dart';
 import 'package:the_movie_db/data/models/loading_page_manager.dart';
 import 'package:the_movie_db/domain/api/movie/movie_api_client.dart';
-import 'package:the_movie_db/data/entity/movie_view_category.dart';
+import 'package:the_movie_db/data/entity/movie_view_category/movie_view_category.dart';
 
 class MovieModel extends ChangeNotifier {
 
-  String get screenHeader => CategoryRoot.getDataByCategory(_category).header;
+  String get screenHeader => CategoryRote.getDataByCategory(_category).header;
   bool get hasData => _movies.isNotEmpty;
 
   List<CardMovie>? get movies => _movies;

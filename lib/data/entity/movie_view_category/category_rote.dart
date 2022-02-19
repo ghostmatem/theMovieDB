@@ -1,11 +1,7 @@
-enum MovieViewCategory {
-  nowPlaying,
-  popular,
-  topRated,
-  upcoming
-}
+import 'package:the_movie_db/data/entity/movie_view_category/category_data.dart';
+import 'package:the_movie_db/data/entity/movie_view_category/movie_view_category.dart';
 
-abstract class CategoryRoot {
+abstract class CategoryRote {
 
   static CategoryData getDataByCategory(MovieViewCategory category) => _callMap[category]!;
 
@@ -15,14 +11,4 @@ abstract class CategoryRoot {
       MovieViewCategory.topRated    :  CategoryData('Лучшие фильмы',      '/movie/top_rated'),
       MovieViewCategory.upcoming    :  CategoryData('Ожидаемые фильмы',   '/movie/upcoming'),
     };
-}
-
-class CategoryData {
-  final String header;
-  final String urlPath;
-
-  CategoryData(
-    this.header,
-    this.urlPath,
-  );
 }

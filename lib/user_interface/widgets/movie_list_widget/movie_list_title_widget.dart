@@ -4,7 +4,7 @@ import 'package:the_movie_db/user_interface/styles/app_theme.dart';
 import 'package:the_movie_db/user_interface/styles/movie_list_screen_theme.dart';
 import 'package:the_movie_db/Library/Extentions/date_time_extention.dart';
 
-import '../my_placer.dart';
+import '../../../Library/Widgets/my_placer.dart';
 
 
 class MovieListTitleWidget extends StatelessWidget {

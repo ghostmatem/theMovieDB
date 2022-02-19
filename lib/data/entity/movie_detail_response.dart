@@ -1,4 +1,4 @@
-class MovieDetailResponse {
+class MovieDetail {
   final bool adult;
   final String? backdropPath;
   final int budget;
@@ -23,7 +23,7 @@ class MovieDetailResponse {
   final bool video;
   final double voteAverage;
   final int voteCount;
-  MovieDetailResponse({
+  MovieDetail({
     required this.adult,
     required this.backdropPath,
     required this.budget,
@@ -79,8 +79,8 @@ class MovieDetailResponse {
     };
   }
 
-  factory MovieDetailResponse.fromJson(Map<String, dynamic> map) {
-    return MovieDetailResponse(
+  factory MovieDetail.fromJson(Map<String, dynamic> map) {
+    return MovieDetail(
       adult: map['adult'] ?? false,
       backdropPath: map['backdrop_path'],
       budget: map['budget']?.toInt() ?? 0,
